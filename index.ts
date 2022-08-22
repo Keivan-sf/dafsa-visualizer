@@ -1,6 +1,7 @@
 let id = 0;
 const generateID = () => ++id;
 type edgeNode = { char: string; node: GraphNode };
+type results = { numberOfNodes: number; words: string[] };
 
 class NodeManager {
     static nodes: GraphNode[] = [];
@@ -60,7 +61,10 @@ function findPrefix(word: string) {
         const sliced = word.slice(0, i);
         for (const node of NodeManager.nodes) {
             if (node.evaluateParentWord() === sliced) {
-                return { node, neededLetters: word.slice(i) };
+                let passedNode = !node.isEndNode
+                    ? node
+                    : node.parentEdge[0].node;
+                return { node: passedNode, neededLetters: word.slice(i) };
             }
         }
     }
@@ -85,11 +89,19 @@ const BuildTrie = (...words: string[]) => {
     }
 };
 
-BuildTrie("test", "tesing");
+const extractWords = (): results => {
+    const data: results = {
+        words: [],
+        numberOfNodes: NodeManager.nodes.length,
+    };
+    for (const node of NodeManager.nodes) {
+        if (node.isEndNode) data.words.push(node.evaluateParentWord());
+    }
+    console.table(data);
+    return data;
+};
 
-for (const node of NodeManager.nodes) {
-    if (node.isEndNode) console.log(node.evaluateParentWord());
-}
-console.log(NodeManager.nodes.length);
+BuildTrie("test", "testing");
+extractWords();
 
-console.dir(NodeManager.nodes[0], { depth: 20 });
+console.dir(NodeManager.nodes[0], { depth: 30 });
