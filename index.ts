@@ -66,8 +66,8 @@ function findPrefix(word: string) {
     }
 }
 
-function createWord(word: string) {
-    let currentNode = root;
+function createWord(word: string, startNode: GraphNode) {
+    let currentNode = startNode;
     const lastNode = new GraphNode();
     for (let i of word) {
         const newNode = new GraphNode();
@@ -78,6 +78,13 @@ function createWord(word: string) {
     return lastNode;
 }
 
-createWord("tesiiiing");
-const foundWord = findPrefix("test");
-console.log(foundWord, foundWord?.node?.evaluateParentWord());
+const BuildTrie = (...words: string[]) => {
+    for (const word of words) {
+        const prefix = findPrefix("tesing");
+        createWord(prefix?.neededLetters!, prefix?.node!);
+    }
+};
+
+BuildTrie("test" , "tesing");
+
+// console.dir(NodeManager, { depth: 10 });
