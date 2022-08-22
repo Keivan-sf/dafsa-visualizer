@@ -80,11 +80,16 @@ function createWord(word: string, startNode: GraphNode) {
 
 const BuildTrie = (...words: string[]) => {
     for (const word of words) {
-        const prefix = findPrefix("tesing");
+        const prefix = findPrefix(word);
         createWord(prefix?.neededLetters!, prefix?.node!);
     }
 };
 
-BuildTrie("test" , "tesing");
+BuildTrie("test", "tesing");
 
-// console.dir(NodeManager, { depth: 10 });
+for (const node of NodeManager.nodes) {
+    if (node.isEndNode) console.log(node.evaluateParentWord());
+}
+console.log(NodeManager.nodes.length);
+
+console.dir(NodeManager.nodes[0], { depth: 20 });
