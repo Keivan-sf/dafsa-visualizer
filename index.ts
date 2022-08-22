@@ -40,6 +40,7 @@ class GraphNode {
     }
 
     evaluateParentWord() {
+        if (this.isRoot) return "";
         let currentNode: this | GraphNode = this;
         let prefix = "";
         while (!currentNode.isRoot) {
@@ -54,6 +55,17 @@ class GraphNode {
 
 const root = new GraphNode(true);
 
+function findPrefix(word: string) {
+    for (let i = word.length - 1; i >= 0; i--) {
+        const sliced = word.slice(0, i);
+        for (const node of NodeManager.nodes) {
+            if (node.evaluateParentWord() === sliced) {
+                return { node, neededLetters: word.slice(i) };
+            }
+        }
+    }
+}
+
 function createWord(word: string) {
     let currentNode = root;
     const lastNode = new GraphNode();
@@ -66,5 +78,6 @@ function createWord(word: string) {
     return lastNode;
 }
 
-const last = createWord("test 2 2");
-console.log(last.evaluateParentWord());
+createWord("tesiiiing");
+const foundWord = findPrefix("test");
+console.log(foundWord, foundWord?.node?.evaluateParentWord());
