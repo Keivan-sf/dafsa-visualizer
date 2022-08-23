@@ -13,6 +13,9 @@ class NodeManager {
     static addNode(node: GraphNode) {
         NodeManager.nodes.push(node);
     }
+    static getShortRootSummary() {
+        return this.nodes[0].getSummery();
+    }
 }
 
 class GraphNode {
@@ -23,6 +26,17 @@ class GraphNode {
 
     constructor(public isRoot = false) {
         NodeManager.addNode(this);
+    }
+
+    getSummery():any {
+        const summary = {
+            id: this.id,
+            edges: this.edges.map((e) => ({
+                char: e.char,
+                node: e.node.getSummery(),
+            })),
+        };
+        return summary;
     }
 
     addParentEdge(edge: edgeNode) {
@@ -41,7 +55,6 @@ class GraphNode {
     }
 
     evaluateParentWord() {
-        if (this.isRoot) return "";
         let currentNode: this | GraphNode = this;
         let prefix = "";
         while (!currentNode.isRoot) {
@@ -101,7 +114,7 @@ const extractWords = (): results => {
     return data;
 };
 
-BuildTrie("test", "testing");
+BuildTrie("test", "testing" ,"tub" , "tubs" , "rows" , "row");
 extractWords();
 
-console.dir(NodeManager.nodes[0], { depth: 30 });
+console.dir(NodeManager.getShortRootSummary(), { depth: 30 });
