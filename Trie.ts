@@ -46,6 +46,27 @@ class NodeManager {
         }
         return words;
     }
+
+    static compareNodes(node1: GraphNode, node2: GraphNode) {
+        const NODE_1_EDGES = NodeManager.calculateEdgeWord(
+            { char: "", node: node1 },
+            "",
+            []
+        );
+        const NODE_2_EDGES = NodeManager.calculateEdgeWord(
+            { char: "", node: node2 },
+            "",
+            []
+        );
+        if (NODE_1_EDGES.length !== NODE_2_EDGES.length) return false;
+        for (const edge of NODE_2_EDGES) {
+            const duplicate = NODE_1_EDGES.findIndex((e) => e === edge);
+            if (duplicate === -1) return false;
+            NODE_1_EDGES.splice(duplicate, 1);
+        }
+        if (NODE_1_EDGES.length > 0) return false;
+        return true;
+    }
 }
 
 class GraphNode {
@@ -144,8 +165,21 @@ const extractWords = (): results => {
     return data;
 };
 
-BuildTrie("test", "testing", "tub", "tubs", "rows", "row");
+BuildTrie("tap", "taps" , "tuple" , "tuples" , "row" , "rows");
 extractWords();
 
-console.log(`edge:`, root.edges[0]);
-console.log(NodeManager.calculateEdgeWord({ char: "", node: root }, "", []));
+// const minimizeTrie = () => {
+//     const nodes = NodeManager.nodes;
+//     for (const node of NodeManager.nodes) {
+        
+//     }
+// };
+
+console.dir(NodeManager.getShortRootSummary() , {depth: 25});
+const toCompare = [
+    NodeManager.getNode(8),
+    NodeManager.getNode(13),
+]
+console.log(NodeManager.compareNodes(toCompare[0] , toCompare[1]))
+// console.log(`edge:`, root.edges[0]);
+// console.log(NodeManager.calculateEdgeWord({ char: "", node: root }, "", []));
