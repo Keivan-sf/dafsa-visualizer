@@ -88,6 +88,16 @@ class NodeManager {
         const deleteIndex = NodeManager.nodes.findIndex((n) => n.id === nodeID);
         NodeManager.nodes.splice(deleteIndex, 1);
     }
+
+    static mergeNodes(...nodes: [GraphNode, GraphNode, ...GraphNode[]]) {
+        const mainNode = nodes.shift()!;
+        for (const node of nodes) {
+            for (const parent of node.parentEdge) {
+                parent.node.addChildEdge(parent.char, mainNode.id);
+            }
+            NodeManager.deleteNode(node.id);
+        }
+    }
 }
 
 class GraphNode {
