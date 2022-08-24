@@ -76,6 +76,18 @@ class NodeManager {
         if (NODE_1_EDGES.length > 0) return false;
         return true;
     }
+
+    static deleteNode(nodeID: number) {
+        const node = NodeManager.getNode(nodeID);
+        for (const child of node.edges) {
+            node.removeChildEdge(child.char, child.node.id);
+        }
+        for (const parent of node.parentEdge) {
+            node.removeParentEdge(parent.char, parent.node.id);
+        }
+        const deleteIndex = NodeManager.nodes.findIndex((n) => n.id === nodeID);
+        NodeManager.nodes.splice(deleteIndex, 1);
+    }
 }
 
 class GraphNode {
