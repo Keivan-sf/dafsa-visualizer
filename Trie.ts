@@ -3,6 +3,15 @@ const generateID = () => ++id;
 type edgeNode = { char: string; node: GraphNode };
 type results = { numberOfNodes: number; words: string[] };
 
+type deleteEdgeOption = {
+    /**
+     * If **true**, it will call {@link GraphNode.removeParentEdge removeParentEdge} and
+     * {@link GraphNode.removeChildEdge removeChildEdge} on both nodes and delete the
+     * edge bidirectionally
+     */
+    bidirectional?: boolean;
+};
+
 class NodeManager {
     static nodes: GraphNode[] = [];
     static getNode(nodeID: number): GraphNode {
@@ -99,6 +108,44 @@ class GraphNode {
         const node = NodeManager.getNode(nodeID);
         this.edges.push({ char: character, node });
         node.addParentEdge({ char: character, node: this });
+    }
+
+    removeParentEdge(
+        character: string,
+        nodeID: number,
+        options: deleteEdgeOption = { bidirectional: true }
+    ) {
+        const index = this.parentEdge.findIndex(
+            (e) => e.char === character && e.node.id === nodeID
+        );
+        if (index === -1)
+            throw new Error(
+                `A parent edge with char:${character} and id: ${nodeID} does not exist`
+            );
+        const deletedEdge = this.parentEdge.splice(index, 1);
+        if (options?.bidirectional ?? true)
+            deletedEdge[0].node.removeChildEdge(character, this.id, {
+                bidirectional: false,
+            });
+    }
+
+    removeChildEdge(
+        character: string,
+        nodeID: number,
+        options: deleteEdgeOption = { bidirectional: true }
+    ) {
+        const index = this.edges.findIndex(
+            (e) => e.char === character && e.node.id === nodeID
+        );
+        if (index === -1)
+            throw new Error(
+                `A child edge with char:${character} and id: ${nodeID} does not exist`
+            );
+        const deletedEdge = this.edges.splice(index, 1);
+        if (options?.bidirectional ?? true)
+            deletedEdge[0].node.removeParentEdge(character, this.id, {
+                bidirectional: false,
+            });
     }
 
     getParentEdge() {
