@@ -16,6 +16,36 @@ class NodeManager {
     static getShortRootSummary() {
         return this.nodes[0].getSummery();
     }
+
+    /**
+     * { 'a' , ...} , '' , [];
+     * - { 'b' , ...} , 'a' , [];
+     * -- { 'c'} , 'ab' , [];
+     * ---'abc' ++
+     *
+     * - {'d' , ...} , 'a' , ['abc'];
+     * -- { 'r' } , 'ad' , ['abc'];
+     * --- 'adr' ++
+     *
+     * -- {'t' , ...} , 'ad' , ['abc' , 'adr'];
+     * --- {'W'} , 'adt' , ['abc' , 'adr'];
+     * ---- 'adtw' +++
+     *
+     * ['abc' , 'adr' , 'adtw']
+     *
+     */
+
+    static calculateEdgeWord(edge: edgeNode, prefix: string, words: string[]) {
+        prefix += edge.char;
+        if (edge.node.isEndNode) {
+            words.push(prefix);
+        }
+
+        for (const childEdge of edge.node.edges) {
+            NodeManager.calculateEdgeWord(childEdge, prefix, words);
+        }
+        return words;
+    }
 }
 
 class GraphNode {
@@ -28,7 +58,7 @@ class GraphNode {
         NodeManager.addNode(this);
     }
 
-    getSummery():any {
+    getSummery(): any {
         const summary = {
             id: this.id,
             edges: this.edges.map((e) => ({
@@ -114,7 +144,8 @@ const extractWords = (): results => {
     return data;
 };
 
-BuildTrie("test", "testing" ,"tub" , "tubs" , "rows" , "row");
+BuildTrie("test", "testing", "tub", "tubs", "rows", "row");
 extractWords();
 
-console.dir(NodeManager.getShortRootSummary(), { depth: 30 });
+console.log(`edge:`, root.edges[0]);
+console.log(NodeManager.calculateEdgeWord({ char: "", node: root }, "", []));
