@@ -89,7 +89,7 @@ class NodeManager {
         NodeManager.nodes.splice(deleteIndex, 1);
     }
 
-    static mergeNodes(...nodes: [GraphNode, GraphNode, ...GraphNode[]]) {
+    static mergeNodes(nodes: [GraphNode, GraphNode, ...GraphNode[]]) {
         const mainNode = nodes.shift()!;
         for (const node of nodes) {
             for (const parent of node.parentEdge) {
@@ -234,21 +234,37 @@ const extractWords = (): results => {
     return data;
 };
 
-BuildTrie("tap", "taps" , "tuple" , "tuples" , "row" , "rows");
-extractWords();
+BuildTrie("tops", "top", "tap", "taps");
 
-// const minimizeTrie = () => {
-//     const nodes = NodeManager.nodes;
-//     for (const node of NodeManager.nodes) {
-        
-//     }
-// };
+const minimizeTrie = () => {
+    let stack = [...NodeManager.nodes];
+    const visitedNodesIDs: number[] = [];
+    while (stack[0]) {
+        if (visitedNodesIDs.includes(stack[0].id)) {
+            stack.shift();
+            continue;
+        }
+        const node = stack[0];
+        const duplicates: [GraphNode, GraphNode, ...GraphNode[]] =
+            NodeManager.nodes.filter(
+                (n) => n.id != node.id && NodeManager.compareNodes(node, n)
+            ) as [GraphNode, GraphNode, ...GraphNode[]];
 
-console.dir(NodeManager.getShortRootSummary() , {depth: 25});
-const toCompare = [
-    NodeManager.getNode(8),
-    NodeManager.getNode(13),
-]
-console.log(NodeManager.compareNodes(toCompare[0] , toCompare[1]))
+        if (duplicates.length > 0) {
+            duplicates.unshift(node);
+            NodeManager.mergeNodes(duplicates);
+        }
+        visitedNodesIDs.push(node.id);
+        stack = [...NodeManager.nodes];
+    }
+};
+
+// NodeManager.deleteNode(20);
+// extractWords();
+
+minimizeTrie();
+console.dir(NodeManager.getShortRootSummary(), { depth: 25 });
+// const toCompare = [NodeManager.getNode(8), NodeManager.getNode(13)];
+// console.log(NodeManager.compareNodes(toCompare[0], toCompare[1]));
 // console.log(`edge:`, root.edges[0]);
 // console.log(NodeManager.calculateEdgeWord({ char: "", node: root }, "", []));
