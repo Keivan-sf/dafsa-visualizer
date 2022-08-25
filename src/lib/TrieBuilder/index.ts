@@ -13,3 +13,26 @@ export const buildTrie = (NodeManager: Graph, words: string[]) => {
         createWord(prefix.neededLetters, prefix.node, NodeManager);
     }
 };
+
+export const minimizeTrie = (NodeManager: Graph) => {
+    let stack = [...NodeManager.nodes];
+    const visitedNodesIDs: number[] = [];
+    while (stack[0]) {
+        if (visitedNodesIDs.includes(stack[0].id)) {
+            stack.shift();
+            continue;
+        }
+        const node = stack[0];
+        const duplicates: [GraphNode, GraphNode, ...GraphNode[]] =
+            NodeManager.nodes.filter(
+                (n) => n.id != node.id && NodeManager.compareNodes(node, n)
+            ) as [GraphNode, GraphNode, ...GraphNode[]];
+
+        if (duplicates.length > 0) {
+            duplicates.unshift(node);
+            NodeManager.mergeNodes(duplicates);
+        }
+        visitedNodesIDs.push(node.id);
+        stack = [...NodeManager.nodes];
+    }
+};

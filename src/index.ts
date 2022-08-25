@@ -1,4 +1,11 @@
 import trie from "./lib";
-console.dir(trie.generateTrieGraph("tops", "top", "tap", "taps"), {
-    depth: 25,
-});
+
+const t = trie.generateTrieGraph("tops", "top", "tap", "taps");
+const m = trie.minimizeTrieGraph(t);
+const m2 = trie.generateDawg("tops", "top", "tap", "taps");
+console.dir(
+    m2.getShortRootSummary(),
+    {
+        depth: 25,
+    }
+);
