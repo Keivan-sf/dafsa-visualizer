@@ -90,8 +90,8 @@ class GraphNode {
     public parentEdge: edgeNode[] = [];
     public isEndNode: boolean = false;
 
-    constructor(public isRoot = false) {
-        NodeManager.addNode(this);
+    constructor(public NodeManager: Graph , public isRoot = false) {
+        this.NodeManager.addNode(this);
     }
 
     getSummery(): any {
@@ -111,7 +111,7 @@ class GraphNode {
     }
 
     addChildEdge(character: string, nodeID: number) {
-        const node = NodeManager.getNode(nodeID);
+        const node = this.NodeManager.getNode(nodeID);
         this.edges.push({ char: character, node });
         node.addParentEdge({ char: character, node: this });
     }
@@ -171,7 +171,7 @@ class GraphNode {
     }
 }
 
-const root = new GraphNode(true);
+const root = new GraphNode(NodeManager , true);
 
 function findPrefix(word: string) {
     for (let i = word.length; i >= 0; i--) {
@@ -189,9 +189,9 @@ function findPrefix(word: string) {
 
 function createWord(word: string, startNode: GraphNode) {
     let currentNode = startNode;
-    const lastNode = new GraphNode();
+    const lastNode = new GraphNode(NodeManager);
     for (let i of word) {
-        const newNode = new GraphNode();
+        const newNode = new GraphNode(NodeManager);
         currentNode.addChildEdge(i, newNode.id);
         currentNode = newNode;
     }
