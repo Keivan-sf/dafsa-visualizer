@@ -12,57 +12,39 @@ type deleteEdgeOption = {
     bidirectional?: boolean;
 };
 
-class NodeManager {
-    static nodes: GraphNode[] = [];
-    static getNode(nodeID: number): GraphNode {
-        const node = NodeManager.nodes.find((n) => n.id === nodeID);
+class Graph {
+    nodes: GraphNode[] = [];
+    getNode(nodeID: number): GraphNode {
+        const node = this.nodes.find((n) => n.id === nodeID);
         if (!node) throw new Error(`Node #${nodeID} not found`);
         return node;
     }
-    static addNode(node: GraphNode) {
-        NodeManager.nodes.push(node);
+    addNode(node: GraphNode) {
+        this.nodes.push(node);
     }
-    static getShortRootSummary() {
+    getShortRootSummary() {
         return this.nodes[0].getSummery();
     }
 
-    /**
-     * { 'a' , ...} , '' , [];
-     * - { 'b' , ...} , 'a' , [];
-     * -- { 'c'} , 'ab' , [];
-     * ---'abc' ++
-     *
-     * - {'d' , ...} , 'a' , ['abc'];
-     * -- { 'r' } , 'ad' , ['abc'];
-     * --- 'adr' ++
-     *
-     * -- {'t' , ...} , 'ad' , ['abc' , 'adr'];
-     * --- {'W'} , 'adt' , ['abc' , 'adr'];
-     * ---- 'adtw' +++
-     *
-     * ['abc' , 'adr' , 'adtw']
-     *
-     */
-
-    static calculateEdgeWord(edge: edgeNode, prefix: string, words: string[]) {
+    calculateEdgeWord(edge: edgeNode, prefix: string, words: string[]) {
         prefix += edge.char;
         if (edge.node.isEndNode) {
             words.push(prefix);
         }
 
         for (const childEdge of edge.node.edges) {
-            NodeManager.calculateEdgeWord(childEdge, prefix, words);
+            this.calculateEdgeWord(childEdge, prefix, words);
         }
         return words;
     }
 
-    static compareNodes(node1: GraphNode, node2: GraphNode) {
-        const NODE_1_EDGES = NodeManager.calculateEdgeWord(
+    compareNodes(node1: GraphNode, node2: GraphNode) {
+        const NODE_1_EDGES = this.calculateEdgeWord(
             { char: "", node: node1 },
             "",
             []
         );
-        const NODE_2_EDGES = NodeManager.calculateEdgeWord(
+        const NODE_2_EDGES = this.calculateEdgeWord(
             { char: "", node: node2 },
             "",
             []
@@ -77,28 +59,30 @@ class NodeManager {
         return true;
     }
 
-    static deleteNode(nodeID: number) {
-        const node = NodeManager.getNode(nodeID);
+    deleteNode(nodeID: number) {
+        const node = this.getNode(nodeID);
         for (const child of node.edges) {
             node.removeChildEdge(child.char, child.node.id);
         }
         for (const parent of node.parentEdge) {
             node.removeParentEdge(parent.char, parent.node.id);
         }
-        const deleteIndex = NodeManager.nodes.findIndex((n) => n.id === nodeID);
-        NodeManager.nodes.splice(deleteIndex, 1);
+        const deleteIndex = this.nodes.findIndex((n) => n.id === nodeID);
+        this.nodes.splice(deleteIndex, 1);
     }
 
-    static mergeNodes(nodes: [GraphNode, GraphNode, ...GraphNode[]]) {
+    mergeNodes(nodes: [GraphNode, GraphNode, ...GraphNode[]]) {
         const mainNode = nodes.shift()!;
         for (const node of nodes) {
             for (const parent of node.parentEdge) {
                 parent.node.addChildEdge(parent.char, mainNode.id);
             }
-            NodeManager.deleteNode(node.id);
+            this.deleteNode(node.id);
         }
     }
 }
+
+const NodeManager = new Graph(); 
 
 class GraphNode {
     public id = generateID();
@@ -259,12 +243,6 @@ const minimizeTrie = () => {
     }
 };
 
-// NodeManager.deleteNode(20);
-// extractWords();
 
 minimizeTrie();
 console.dir(NodeManager.getShortRootSummary(), { depth: 25 });
-// const toCompare = [NodeManager.getNode(8), NodeManager.getNode(13)];
-// console.log(NodeManager.compareNodes(toCompare[0], toCompare[1]));
-// console.log(`edge:`, root.edges[0]);
-// console.log(NodeManager.calculateEdgeWord({ char: "", node: root }, "", []));
