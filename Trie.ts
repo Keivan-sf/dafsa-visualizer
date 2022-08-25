@@ -244,5 +244,5 @@ const minimizeTrie = () => {
 };
 
 
-minimizeTrie();
+// minimizeTrie();
 console.dir(NodeManager.getShortRootSummary(), { depth: 25 });
