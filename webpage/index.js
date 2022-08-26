@@ -12,6 +12,6 @@ const buildBtn = document.querySelector(".build-btn>div");
 })();
 
 buildBtn.onclick = () => {
-    const words = userInput.value.split(",").map(w => w.trim());
+    const words = userInput.value.split(",").map(w => w.trim()).filter(w => w);
     buildGraphs(words, trieEL, dawgEL);
 }
