@@ -1,15 +1,66 @@
+body {
+    background-color: #ffffff;
+    padding: 1px;
+}
+
 .graphVis {
     width: 100%;
     margin: 50px 0px 0px 0px;
 }
-hr{
+
+hr {
     width: 40%;
 }
+
 .graphVis .title {
     text-align: center;
     letter-spacing: 1px;
 }
 
-.graphVis .g-container{
+.graphVis .g-container {
     margin: 10px auto;
+}
+
+.inputContainer input[type=text] {
+    border: none;
+    float: none;
+    display: block;
+    height: 70px;
+    width: 300px;
+    font-size: 14pt;
+    text-align: center;
+    margin: 100px auto 10px;
+    border-radius: 150px;
+    border: 1px solid #000;
+    transition: 0.2s;
+}
+
+.inputContainer input[type=text]:focus {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 40px #d9d9d9;
+
+}
+
+.build-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.build-btn>div {
+    width: auto;
+    padding: 20px 40px;
+    display: inline;
+    border-radius: 50px;
+    border: 1px solid #000;
+
+    margin: 40px auto 100px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.build-btn>div:hover {
+    border: 1px solid rgba(0, 0, 0, 0);
+
+    box-shadow: 0px 0px 40px #d9d9d9;
 }

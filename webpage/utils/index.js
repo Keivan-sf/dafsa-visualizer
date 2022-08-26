@@ -6,6 +6,7 @@ const styleGraph = (svg, div) => {
         e.setAttribute("x", x + 1);
     });
     svg.querySelectorAll("ellipse + text").forEach((n) => (n.innerHTML = " "));
+    svg.querySelector("polygon").setAttribute("fill" , "#ffffff");
     div.innerHTML = "";
     div.style.width = svg.getAttribute("width");
     div.appendChild(svg);
