@@ -6,6 +6,7 @@ const styleGraph = (svg, div) => {
         e.setAttribute("x", x + 1);
     });
     svg.querySelectorAll("ellipse + text").forEach((n) => (n.innerHTML = " "));
+    div.innerHTML = "";
     div.style.width = svg.getAttribute("width");
     div.appendChild(svg);
 };
@@ -53,4 +54,9 @@ const showDawgGraph = async (trieGraph, el) => {
     const svg = await viz.renderSVGElement(graphInViz);
     styleGraph(svg, el);
     return { graph, svg };
+};
+
+const buildGraphs = async (words, trieEL, dawgEL) => {
+    const t = await showTrieGraph(words, trieEL);
+    await showDawgGraph(t.graph, dawgEL);
 };

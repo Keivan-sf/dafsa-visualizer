@@ -2,9 +2,12 @@
     width: 100%;
     margin: 50px 0px 0px 0px;
 }
-
+hr{
+    width: 40%;
+}
 .graphVis .title {
     text-align: center;
+    letter-spacing: 1px;
 }
 
 .graphVis .g-container{
