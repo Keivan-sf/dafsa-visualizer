@@ -25,3 +25,7 @@ buildBtn.onclick = () => {
         .filter((w) => w);
     buildGraphs(words, { trieEL, dawgEL, trieTitle, dawgTitle });
 };
+
+userInput.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") buildBtn.onclick();
+});
