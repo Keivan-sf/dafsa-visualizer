@@ -5,20 +5,12 @@ mainDiv.id = "mainDiv";
 body.appendChild(mainDiv);
 const graph = Trie.generateTrieGraph("tap", "taps", "tup", "tups");
 const graphInViz = graph.convertToVizGraph();
+
 (async () => {
     const svg = await viz.renderSVGElement(graphInViz);
-    styleGraph(svg);
+    styleGraph(svg, mainDiv);
+    console.log(`svg outer`, svg.outerHTML);
+    const png = await svgToPng(svg);
+    console.log(png);
     console.log(svg);
 })();
-
-const styleGraph = (svg) => {
-    svg.querySelectorAll("polygon + text").forEach((e) => {
-        if (e.innerHTML == "EOW") return e.setAttribute("font-size", "10pt");
-        e.setAttribute("font-size", "18pt");
-        const x = +e.getAttribute("x");
-        e.setAttribute("x", x + 1);
-    });
-    svg.querySelectorAll("ellipse + text").forEach((n) => (n.innerHTML = " "));
-    mainDiv.style.width = svg.getAttribute("width");
-    mainDiv.appendChild(svg);
-};
