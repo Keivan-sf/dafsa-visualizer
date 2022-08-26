@@ -1,3 +1,8 @@
+html,
+body {
+    margin: 0;
+}
+
 body {
     background-color: #ffffff;
     padding: 1px;
@@ -5,15 +10,25 @@ body {
 
 }
 
-h1{
-    margin: 100px 0px 0px;
+h1 {
+    margin: -10px 0px 0px 0px;
     text-align: center;
 }
 
-.main-description{
+.main-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {}
+
+.main-description {
     width: 300px;
     text-align: center;
-    margin: 15px auto 60px;
+    margin: 15px auto 30px;
 }
 
 .graphVis {
@@ -70,7 +85,7 @@ hr {
     display: inline;
     border-radius: 50px;
     border: 1px solid #000;
-    margin: 20px auto 100px;
+    margin: 20px auto 0px;
     transition: 0.2s;
     cursor: pointer;
 }
