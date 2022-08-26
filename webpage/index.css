@@ -3,6 +3,10 @@ body {
     margin: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #ffffff;
     padding: 1px;

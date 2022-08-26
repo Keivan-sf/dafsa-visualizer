@@ -18,12 +18,13 @@ const buildBtn = document.querySelector(".build-btn>button");
     });
 })();
 
-buildBtn.onclick = () => {
+buildBtn.onclick = async() => {
     const words = userInput.value
         .split(",")
         .map((w) => w.trim())
         .filter((w) => w);
-    buildGraphs(words, { trieEL, dawgEL, trieTitle, dawgTitle });
+    await buildGraphs(words, { trieEL, dawgEL, trieTitle, dawgTitle });
+    trieTitle.scrollIntoView()
 };
 
 userInput.addEventListener("keyup", (e) => {
