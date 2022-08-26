@@ -38,3 +38,19 @@ const svgToPng = (svgElement) => {
         img.src = url;
     });
 };
+
+const showTrieGraph = async (words, el) => {
+    const graph = Trie.generateTrieGraph(...words);
+    const graphInViz = graph.convertToVizGraph();
+    const svg = await viz.renderSVGElement(graphInViz);
+    styleGraph(svg, el);
+    return { graph, svg };
+};
+
+const showDawgGraph = async (trieGraph, el) => {
+    const graph = Trie.minimizeTrieGraph(trieGraph);
+    const graphInViz = graph.convertToVizGraph();
+    const svg = await viz.renderSVGElement(graphInViz);
+    styleGraph(svg, el);
+    return { graph, svg };
+};

@@ -1,3 +1,12 @@
-#mainDiv{
-    margin: 50px auto 0px;
+.graphVis {
+    width: 100%;
+    margin: 50px 0px 0px 0px;
+}
+
+.graphVis .title {
+    text-align: center;
+}
+
+.graphVis .g-container{
+    margin: 10px auto;
 }

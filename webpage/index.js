@@ -1,16 +1,14 @@
 const viz = new Viz();
 const body = document.querySelector("body");
-const mainDiv = document.createElement("div");
-mainDiv.id = "mainDiv";
-body.appendChild(mainDiv);
-const graph = Trie.generateTrieGraph("tap", "taps", "tup", "tups");
-const graphInViz = graph.convertToVizGraph();
-
+const trieEL = document.querySelector(".trie-graph > .g-container");
+const dawgEL = document.querySelector(".dawg-graph > .g-container");
 (async () => {
-    const svg = await viz.renderSVGElement(graphInViz);
-    styleGraph(svg, mainDiv);
-    console.log(`svg outer`, svg.outerHTML);
-    const png = await svgToPng(svg);
-    console.log(png);
-    console.log(svg);
+
+    const t = await showTrieGraph(["tap", "taps", "top", "tops" , "awp" , "connector" , "connect" , "teen" , "tooth"], trieEL);
+    console.log(t);
+    await showDawgGraph(t.graph, dawgEL);
+
+    // const png = await svgToPng(svg);
+    // console.log(png);
+    // console.log(svg);
 })();
