@@ -4,7 +4,6 @@ import { convertGraphToVizGraph } from "./utils";
 
 export class Graph {
     nodes: GraphNode[] = [];
-    private vizGraph: string = "";
     getNode(nodeID: number): GraphNode {
         const node = this.nodes.find((n) => n.id === nodeID);
         if (!node) throw new Error(`Node #${nodeID} not found`);
@@ -73,9 +72,6 @@ export class Graph {
     }
 
     convertToVizGraph() {
-        this.vizGraph = this.vizGraph
-            ? this.vizGraph
-            : convertGraphToVizGraph(this);
-        return this.vizGraph;
+        return convertGraphToVizGraph(this);
     }
 }
