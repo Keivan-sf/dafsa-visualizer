@@ -6,7 +6,7 @@ const styleGraph = (svg, div) => {
         e.setAttribute("x", x + 1);
     });
     svg.querySelectorAll("ellipse + text").forEach((n) => (n.innerHTML = " "));
-    svg.querySelector("polygon").setAttribute("fill" , "#ffffff");
+    svg.querySelector("polygon").setAttribute("fill", "#ffffff");
     div.innerHTML = "";
     div.style.width = svg.getAttribute("width");
     div.appendChild(svg);
@@ -57,7 +57,13 @@ const showDawgGraph = async (trieGraph, el) => {
     return { graph, svg };
 };
 
-const buildGraphs = async (words, trieEL, dawgEL) => {
+const buildGraphs = async (
+    words,
+    elements = { trieEL, dawgEL, trieTitle, dawgTitle }
+) => {
+    const { trieEL, dawgEL, trieTitle, dawgTitle } = elements;
     const t = await showTrieGraph(words, trieEL);
+    trieTitle.innerHTML = `Trie<br>Number of nodes: ${t.graph.nodes.length}`;
     await showDawgGraph(t.graph, dawgEL);
+    dawgTitle.innerHTML = `DAFSA/DAWG<br>Number of nodes: ${t.graph.nodes.length}`;
 };
