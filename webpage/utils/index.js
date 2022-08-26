@@ -62,8 +62,12 @@ const buildGraphs = async (
     elements = { trieEL, dawgEL, trieTitle, dawgTitle }
 ) => {
     const { trieEL, dawgEL, trieTitle, dawgTitle } = elements;
+
     const t = await showTrieGraph(words, trieEL);
-    trieTitle.innerHTML = `Trie<br>Number of nodes: ${t.graph.nodes.length}`;
-    await showDawgGraph(t.graph, dawgEL);
-    dawgTitle.innerHTML = `DAFSA/DAWG<br>Number of nodes: ${t.graph.nodes.length}`;
+    const tirePng = await svgToPng(t.svg);
+    trieTitle.innerHTML = `Trie<br>Number of nodes: ${t.graph.nodes.length}<br><a download href="${tirePng}">Download png</a>`;
+
+    const d = await showDawgGraph(t.graph, dawgEL);
+    const dawgPng = await svgToPng(d.svg);
+    dawgTitle.innerHTML = `DAFSA/DAWG<br>Number of nodes: ${t.graph.nodes.length}<br><a download href="${dawgPng}">Download png</a>`;
 };
