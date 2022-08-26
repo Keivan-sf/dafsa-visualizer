@@ -61,7 +61,7 @@ hr {
     text-align: center;
     margin: 0px auto 10px;
     border-radius: 150px;
-    border: 1px solid #000;
+    border: 1px solid rgb(100, 100, 100);
     transition: 0.2s;
 }
 
@@ -82,7 +82,7 @@ hr {
     padding: 20px 40px;
     display: inline;
     border-radius: 50px;
-    border: 1px solid #000;
+    border: 1px solid rgb(100, 100, 100);
     margin: 10px auto 0px;
     transition: 0.2s;
     cursor: pointer;
