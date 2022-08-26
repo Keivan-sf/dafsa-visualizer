@@ -23,12 +23,10 @@ h1 {
     align-items: center;
 }
 
-header {}
-
 .main-description {
     width: 300px;
     text-align: center;
-    margin: 15px auto 30px;
+    margin: 25px auto 30px;
 }
 
 .graphVis {
@@ -85,7 +83,7 @@ hr {
     display: inline;
     border-radius: 50px;
     border: 1px solid #000;
-    margin: 20px auto 0px;
+    margin: 10px auto 0px;
     transition: 0.2s;
     cursor: pointer;
 }
