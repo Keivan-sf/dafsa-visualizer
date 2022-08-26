@@ -1,6 +1,19 @@
 body {
     background-color: #ffffff;
     padding: 1px;
+    font-family: 'Work Sans', sans-serif;
+
+}
+
+h1{
+    margin: 100px 0px 0px;
+    text-align: center;
+}
+
+.main-description{
+    width: 300px;
+    text-align: center;
+    margin: 15px auto 60px;
 }
 
 .graphVis {
@@ -33,7 +46,7 @@ hr {
     width: 300px;
     font-size: 14pt;
     text-align: center;
-    margin: 100px auto 10px;
+    margin: 0px auto 10px;
     border-radius: 150px;
     border: 1px solid #000;
     transition: 0.2s;
@@ -57,8 +70,7 @@ hr {
     display: inline;
     border-radius: 50px;
     border: 1px solid #000;
-
-    margin: 40px auto 100px;
+    margin: 20px auto 100px;
     transition: 0.2s;
     cursor: pointer;
 }
