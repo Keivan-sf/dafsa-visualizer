@@ -1,5 +1,6 @@
 
 ![main](docs/images/main-dafsa.jpg)
+Checkout [#Mahsa_Amini](https://twitter.com/search?q=%23mahsa_amini), Support women of Iran 🇮🇷
 
 # Trie & DAWG visualizer
 A simple  trie and dawg visualizer using [GraphViz](http://www.graphviz.org/) in TS
